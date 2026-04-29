@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Kinza Saeed — Full-Stack & GenAI Developer</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0a0a0f;
+    --bg2: #111118;
+    --bg3: #16161f;
+    --border: rgba(255,255,255,0.08);
+    --border2: rgba(255,255,255,0.14);
+    --text: #f0ede8;
+    --muted: #888884;
+    --accent: #c8f540;
+    --accent2: #a8d420;
+    --teal: #3fffd2;
+    --purple: #b78fff;
+    --card: #13131b;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    font-size: 15px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ─── NOISE OVERLAY ─── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.5;
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  /* ─── CURSOR ─── */
+  .cursor {
+    width: 10px; height: 10px;
+    background: var(--accent);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 10000;
+    transition: transform 0.15s ease;
+    mix-blend-mode: difference;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.2rem 4rem;
+    border-bottom: 1px solid var(--border);
+    background: rgba(10,10,15,0.85);
+    backdrop-filter: blur(12px);
+  }
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.1rem;
+    letter-spacing: -0.02em;
+    color: var(--text);
+  }
+  .nav-logo span { color: var(--accent); }
+  .nav-links { display: flex; gap: 2.5rem; }
+  .nav-links a {
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+  .nav-cta {
+    background: var(--accent);
+    color: #0a0a0f;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.5rem 1.2rem;
+    border-radius: 2px;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .nav-cta:hover { background: var(--accent2); transform: translateY(-1px); }
+
+  /* ─── HERO ─── */
+  #hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    justify-content: flex-end;
+    padding: 0 4rem 5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-grid-bg {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 20%, transparent 100%);
+    pointer-events: none;
+  }
+  .hero-orb {
+    position: absolute;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    top: -100px; right: -100px;
+    background: radial-gradient(circle, rgba(200,245,64,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-status {
+    display: inline-flex; align-items: center; gap: 8px;
+    border: 1px solid var(--border2);
+    border-radius: 2px;
+    padding: 0.4rem 1rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 2rem;
+    width: fit-content;
+  }
+  .status-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+  .hero-name {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(3.5rem, 9vw, 8rem);
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.5rem;
+  }
+  .hero-name .line2 { color: var(--accent); }
+  .hero-tagline {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: clamp(1.1rem, 2.5vw, 1.6rem);
+    color: var(--muted);
+    max-width: 520px;
+    margin-bottom: 3rem;
+    line-height: 1.5;
+  }
+  .hero-bottom {
+    display: flex; align-items: center; gap: 2rem;
+    flex-wrap: wrap;
+  }
+  .hero-links { display: flex; gap: 1rem; }
+  .hero-link-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    border: 1px solid var(--border2);
+    border-radius: 2px;
+    padding: 0.6rem 1.4rem;
+    font-size: 0.78rem;
+    letter-spacing: 0.06em;
+    color: var(--text);
+    transition: border-color 0.2s, color 0.2s, transform 0.15s;
+  }
+  .hero-link-btn:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+  .hero-link-btn.primary {
+    background: var(--accent);
+    color: #0a0a0f;
+    border-color: var(--accent);
+    font-weight: 600;
+  }
+  .hero-link-btn.primary:hover { background: var(--accent2); border-color: var(--accent2); color: #0a0a0f; }
+  .hero-scroll {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted);
+    margin-left: auto;
+  }
+  .scroll-line {
+    width: 40px; height: 1px;
+    background: var(--border2);
+  }
+
+  /* ─── SECTIONS ─── */
+  section { padding: 6rem 4rem; position: relative; }
+  .section-label {
+    font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 0.5rem;
+  }
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin-bottom: 3rem;
+  }
+
+  /* ─── ABOUT ─── */
+  #about { border-top: 1px solid var(--border); }
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+  .about-text p {
+    color: var(--muted);
+    font-size: 0.95rem;
+    margin-bottom: 1.2rem;
+    line-height: 1.8;
+  }
+  .about-text p strong { color: var(--text); }
+  .about-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+  .stat-cell {
+    background: var(--bg);
+    padding: 1.5rem;
+  }
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+  .stat-label { font-size: 0.72rem; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; }
+
+  /* ─── SKILLS ─── */
+  #skills { border-top: 1px solid var(--border); background: var(--bg2); }
+  .skills-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); }
+  .skill-group { background: var(--bg2); padding: 2rem; }
+  .skill-group-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 600;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 1.2rem;
+  }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .skill-tag {
+    font-size: 0.72rem;
+    border: 1px solid var(--border2);
+    border-radius: 2px;
+    padding: 0.3rem 0.7rem;
+    color: var(--muted);
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .skill-tag:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* ─── PROJECTS ─── */
+  #projects { border-top: 1px solid var(--border); }
+  .projects-list { display: flex; flex-direction: column; gap: 0; border: 1px solid var(--border); }
+  .project-card {
+    display: grid;
+    grid-template-columns: 60px 1fr auto;
+    align-items: start;
+    gap: 2rem;
+    padding: 2.5rem;
+    border-bottom: 1px solid var(--border);
+    transition: background 0.2s;
+    cursor: default;
+  }
+  .project-card:last-child { border-bottom: none; }
+  .project-card:hover { background: var(--bg2); }
+  .project-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    padding-top: 4px;
+  }
+  .project-body {}
+  .project-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin-bottom: 0.5rem;
+  }
+  .project-desc {
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.7;
+    max-width: 540px;
+    margin-bottom: 1rem;
+  }
+  .project-tech-row { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  .tech-chip {
+    font-size: 0.68rem;
+    background: rgba(200,245,64,0.07);
+    color: var(--accent);
+    border-radius: 2px;
+    padding: 0.2rem 0.6rem;
+    letter-spacing: 0.06em;
+  }
+  .project-arrow {
+    font-size: 1.4rem;
+    color: var(--border2);
+    transition: color 0.2s, transform 0.2s;
+    padding-top: 4px;
+  }
+  .project-card:hover .project-arrow { color: var(--accent); transform: translate(2px, -2px); }
+
+  /* ─── EDUCATION ─── */
+  #education { border-top: 1px solid var(--border); background: var(--bg2); }
+  .edu-card {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: start;
+    gap: 2rem;
+    border: 1px solid var(--border);
+    padding: 2.5rem;
+    background: var(--bg);
+    margin-bottom: 1px;
+  }
+  .edu-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 0.3rem;
+  }
+  .edu-inst { font-size: 0.82rem; color: var(--teal); margin-bottom: 0.8rem; }
+  .edu-desc { font-size: 0.83rem; color: var(--muted); line-height: 1.7; max-width: 520px; }
+  .edu-badge {
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: rgba(200,245,64,0.1);
+    color: var(--accent);
+    border: 1px solid rgba(200,245,64,0.2);
+    border-radius: 2px;
+    padding: 0.3rem 0.8rem;
+    white-space: nowrap;
+  }
+
+  /* ─── CONTACT ─── */
+  #contact { border-top: 1px solid var(--border); }
+  .contact-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+  .contact-big {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2rem, 5vw, 4rem);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.5rem;
+  }
+  .contact-big span { color: var(--accent); }
+  .contact-sub { font-size: 0.88rem; color: var(--muted); max-width: 380px; line-height: 1.7; }
+  .contact-links { display: flex; flex-direction: column; gap: 1px; border: 1px solid var(--border); }
+  .contact-link-row {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.2rem 1.5rem;
+    background: var(--bg2);
+    border-bottom: 1px solid var(--border);
+    transition: background 0.2s, color 0.2s;
+    color: var(--text);
+  }
+  .contact-link-row:last-child { border-bottom: none; }
+  .contact-link-row:hover { background: var(--card); color: var(--accent); }
+  .clr-label { font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+  .clr-value { font-size: 0.9rem; transition: color 0.2s; }
+  .contact-link-row:hover .clr-value { color: var(--accent); }
+  .clr-arrow { font-size: 1rem; color: var(--border2); transition: color 0.2s, transform 0.2s; }
+  .contact-link-row:hover .clr-arrow { color: var(--accent); transform: translate(2px, -2px); }
+
+  /* ─── FOOTER ─── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2rem 4rem;
+    display: flex; align-items: center; justify-content: space-between;
+    font-size: 0.72rem; color: var(--muted); letter-spacing: 0.08em;
+  }
+  footer span { color: var(--accent); }
+
+  /* ─── ANIM ─── */
+  .fade-in { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    #hero, section, footer { padding-left: 1.5rem; padding-right: 1.5rem; }
+    .about-grid, .contact-inner { grid-template-columns: 1fr; gap: 2rem; }
+    .project-card { grid-template-columns: 40px 1fr; }
+    .project-arrow { display: none; }
+    .edu-card { grid-template-columns: 1fr; }
+    .hero-name { font-size: clamp(2.8rem, 12vw, 5rem); }
+    .hero-scroll { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">K<span>.</span>Saeed</div>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#skills">Skills</a>
+    <a href="#projects">Projects</a>
+    <a href="#education">Education</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <a href="mailto:kinzasaeed688@gmail.com" class="nav-cta">Hire Me</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-orb"></div>
+
+  <div class="hero-status">
+    <span class="status-dot"></span>
+    Available for work · Karachi, Pakistan
+  </div>
+
+  <h1 class="hero-name">
+    <span class="line1">KINZA</span><br>
+    <span class="line2">SAEED</span>
+  </h1>
+
+  <p class="hero-tagline">
+    Full-Stack Developer building intelligent systems —<br>
+    from GenAI agents to production web apps.
+  </p>
+
+  <div class="hero-bottom">
+    <div class="hero-links">
+      <a href="mailto:kinzasaeed688@gmail.com" class="hero-link-btn primary">Get in touch ↗</a>
+      <a href="https://github.com/Kinzaqirat" target="_blank" class="hero-link-btn">GitHub</a>
+      <a href="https://www.linkedin.com/in/kinzasaeed" target="_blank" class="hero-link-btn">LinkedIn</a>
+    </div>
+    <div class="hero-scroll">
+      <span class="scroll-line"></span>
+      Scroll to explore
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-label">01 — About</div>
+  <div class="section-title">Building the future,<br>one commit at a time.</div>
+
+  <div class="about-grid fade-in">
+    <div class="about-text">
+      <p>I'm a <strong>Full-Stack & GenAI Developer</strong> based in Karachi, Pakistan, with hands-on experience building production-grade applications across the entire stack.</p>
+      <p>My focus is at the intersection of <strong>modern web development</strong> and <strong>AI agent engineering</strong> — creating systems that don't just look good, but think intelligently. I work with TypeScript, Next.js, Python, and Laravel PHP to ship real-world solutions.</p>
+      <p>Currently enrolled at <strong>GIAIC</strong> (Governor Sindh Initiative for GenAI, Computing & Cloud), where I'm deepening expertise in large language models, cloud computing, and scalable application architecture.</p>
+      <p>I believe in <strong>clean code, iterative development</strong>, and building tools that genuinely solve problems — not just demonstrate concepts.</p>
+    </div>
+
+    <div class="about-stats">
+      <div class="stat-cell">
+        <div class="stat-num">3+</div>
+        <div class="stat-label">Major Projects</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num">4+</div>
+        <div class="stat-label">Tech Stacks</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num">2+</div>
+        <div class="stat-label">AI Integrations</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num">∞</div>
+        <div class="stat-label">Lines of Code</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-label">02 — Skills</div>
+  <div class="section-title">Technologies I work with.</div>
+
+  <div class="skills-container fade-in">
+    <div class="skill-group">
+      <div class="skill-group-title">Frontend</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Next.js</span>
+        <span class="skill-tag">TypeScript</span>
+        <span class="skill-tag">Tailwind CSS</span>
+        <span class="skill-tag">HTML5</span>
+        <span class="skill-tag">CSS3</span>
+        <span class="skill-tag">React</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">Backend</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Laravel (PHP)</span>
+        <span class="skill-tag">Python</span>
+        <span class="skill-tag">REST APIs</span>
+        <span class="skill-tag">MVC Architecture</span>
+        <span class="skill-tag">Eloquent ORM</span>
+        <span class="skill-tag">Blade Templating</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">AI & GenAI</div>
+      <div class="skill-tags">
+        <span class="skill-tag">OpenAI SDK</span>
+        <span class="skill-tag">AI Agent Dev</span>
+        <span class="skill-tag">Prompt Engineering</span>
+        <span class="skill-tag">LLM Integration</span>
+        <span class="skill-tag">Tool Calling</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">Tools & DevOps</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Git & GitHub</span>
+        <span class="skill-tag">Vercel</span>
+        <span class="skill-tag">CI/CD Pipelines</span>
+        <span class="skill-tag">MySQL</span>
+        <span class="skill-tag">Composer</span>
+        <span class="skill-tag">CLI Tools</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-label">03 — Projects</div>
+  <div class="section-title">Things I've built.</div>
+
+  <div class="projects-list fade-in">
+    <div class="project-card">
+      <div class="project-num">01</div>
+      <div class="project-body">
+        <div class="project-title">AI Agent System</div>
+        <p class="project-desc">
+          A Python-based autonomous AI agent using the OpenAI SDK capable of executing multi-step, complex instructions with dynamic tool calling. Applied advanced prompt engineering strategies to guide agent behavior and automate real-world workflows with high accuracy.
+        </p>
+        <div class="project-tech-row">
+          <span class="tech-chip">Python</span>
+          <span class="tech-chip">OpenAI SDK</span>
+          <span class="tech-chip">Prompt Engineering</span>
+          <span class="tech-chip">Tool Calling</span>
+        </div>
+      </div>
+      <div class="project-arrow">↗</div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-num">02</div>
+      <div class="project-body">
+        <div class="project-title">Responsive Web Applications</div>
+        <p class="project-desc">
+          Type-safe, component-driven web applications built with TypeScript and Next.js. Designed mobile-first UI layouts with Tailwind CSS and deployed on Vercel with full CI/CD pipeline integration for seamless, zero-downtime updates.
+        </p>
+        <div class="project-tech-row">
+          <span class="tech-chip">Next.js</span>
+          <span class="tech-chip">TypeScript</span>
+          <span class="tech-chip">Tailwind CSS</span>
+          <span class="tech-chip">Vercel</span>
+          <span class="tech-chip">CI/CD</span>
+        </div>
+      </div>
+      <div class="project-arrow">↗</div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-num">03</div>
+      <div class="project-body">
+        <div class="project-title">CLI Logic & Algorithm Projects</div>
+        <p class="project-desc">
+          A series of command-line interface projects demonstrating mastery of data structures, sorting algorithms, and modular code design. Implemented in both TypeScript and Python with clean, reusable architecture.
+        </p>
+        <div class="project-tech-row">
+          <span class="tech-chip">TypeScript</span>
+          <span class="tech-chip">Python</span>
+          <span class="tech-chip">Algorithms</span>
+          <span class="tech-chip">Data Structures</span>
+        </div>
+      </div>
+      <div class="project-arrow">↗</div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="section-label">04 — Education</div>
+  <div class="section-title">Where I learned.</div>
+
+  <div class="fade-in">
+    <div class="edu-card">
+      <div>
+        <div class="edu-name">Full-Stack & Generative AI Program</div>
+        <div class="edu-inst">GIAIC — Governor Sindh Initiative for GenAI, Computing & Cloud</div>
+        <p class="edu-desc">Specialized curriculum covering AI development, cloud computing, TypeScript, Python, and Next.js. Active project-based learner; built multiple real-world applications throughout the program, with focus on production-grade deployments.</p>
+      </div>
+      <div>
+        <span class="edu-badge">2024 — Present</span>
+      </div>
+    </div>
+
+    <div class="edu-card" style="margin-top: 1px;">
+      <div>
+        <div class="edu-name">Intermediate — Pre-Medical</div>
+        <div class="edu-inst">Pakistan</div>
+        <p class="edu-desc">Strong analytical foundation from a science background, bringing a rigorous, problem-solving mindset to software engineering and system design.</p>
+      </div>
+      <div>
+        <span class="edu-badge">Completed</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-label">05 — Contact</div>
+  <div class="contact-inner fade-in">
+    <div>
+      <div class="contact-big">Let's build<br><span>something</span><br>great.</div>
+      <p class="contact-sub">Open to full-time roles, freelance projects, and collaborations in Full-Stack, GenAI, or AI Agent development. Let's connect.</p>
+    </div>
+    <div class="contact-links">
+      <a href="mailto:kinzasaeed688@gmail.com" class="contact-link-row">
+        <div>
+          <div class="clr-label">Email</div>
+          <div class="clr-value">kinzasaeed688@gmail.com</div>
+        </div>
+        <div class="clr-arrow">↗</div>
+      </a>
+      <a href="https://github.com/Kinzaqirat" target="_blank" class="contact-link-row">
+        <div>
+          <div class="clr-label">GitHub</div>
+          <div class="clr-value">github.com/Kinzaqirat</div>
+        </div>
+        <div class="clr-arrow">↗</div>
+      </a>
+      <a href="https://www.linkedin.com/in/kinza-ahmed-3942493a7/" target="_blank" class="contact-link-row">
+        <div>
+          <div class="clr-label">LinkedIn</div>
+          <div class="clr-value">https://www.linkedin.com/in/kinza-ahmed-3942493a7/</div>
+        </div>
+        <div class="clr-arrow">↗</div>
+      </a>
+      <div class="contact-link-row" style="cursor:default;">
+        <div>
+          <div class="clr-label">Location</div>
+          <div class="clr-value">Karachi, Pakistan</div>
+        </div>
+        <div class="clr-arrow" style="opacity:0;">↗</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span>© 2025 Kinza Saeed</span>
+  <span>Built with <span>♥</span> — Full-Stack & GenAI Developer</span>
+</footer>
+
+<script>
+  const cursor = document.getElementById('cursor');
+  document.addEventListener('mousemove', e => {
+    cursor.style.left = (e.clientX - 5) + 'px';
+    cursor.style.top = (e.clientY - 5) + 'px';
+  });
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
