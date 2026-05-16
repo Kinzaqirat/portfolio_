@@ -32,7 +32,6 @@
     overflow-x: hidden;
   }
 
-  /* Grid noise texture overlay */
   body::before {
     content: '';
     position: fixed;
@@ -348,6 +347,15 @@
     background: linear-gradient(135deg, #0f1923, #0d1520);
   }
 
+  /* TradeFlow card — green accent on hover */
+  .project-card.tradeflow::before {
+    background: linear-gradient(135deg, rgba(16,185,129,0.05), transparent);
+  }
+  .project-card.tradeflow:hover {
+    border-color: rgba(16,185,129,0.35);
+    box-shadow: 0 20px 40px rgba(16,185,129,0.08);
+  }
+
   .project-tag {
     font-family: 'DM Mono', monospace;
     font-size: 0.65rem;
@@ -359,10 +367,11 @@
     margin-bottom: 1.2rem;
   }
 
-  .tag-ai { background: rgba(0,212,255,0.1); color: var(--accent); border: 1px solid rgba(0,212,255,0.2); }
-  .tag-fullstack { background: rgba(124,58,237,0.1); color: #a78bfa; border: 1px solid rgba(124,58,237,0.2); }
-  .tag-rag { background: rgba(16,185,129,0.1); color: var(--accent3); border: 1px solid rgba(16,185,129,0.2); }
-  .tag-marketplace { background: rgba(245,158,11,0.1); color: #fbbf24; border: 1px solid rgba(245,158,11,0.2); }
+  .tag-ai         { background: rgba(0,212,255,0.1);   color: var(--accent);  border: 1px solid rgba(0,212,255,0.2); }
+  .tag-fullstack  { background: rgba(124,58,237,0.1);  color: #a78bfa;        border: 1px solid rgba(124,58,237,0.2); }
+  .tag-rag        { background: rgba(16,185,129,0.1);  color: var(--accent3); border: 1px solid rgba(16,185,129,0.2); }
+  .tag-marketplace{ background: rgba(245,158,11,0.1);  color: #fbbf24;        border: 1px solid rgba(245,158,11,0.2); }
+  .tag-trading    { background: rgba(16,185,129,0.1);  color: #34d399;        border: 1px solid rgba(16,185,129,0.25); }
 
   .project-num {
     font-family: 'DM Mono', monospace;
@@ -425,6 +434,9 @@
 
   .proj-link.ghost { color: var(--muted); }
   .proj-link.ghost:hover { color: var(--text); }
+
+  .proj-link.green { color: #34d399; }
+  .proj-link.green:hover { color: var(--accent3); }
 
   /* ─── SKILLS ─── */
   .skills-grid {
@@ -646,8 +658,8 @@
 
     <h1 class="hero-name">Kinza<br><span>Saeed.</span></h1>
 
-        <p class="hero-title">Full-Stack Developer · AI Agent Engineer · Vibe Coder · Spec-Driven Builder</p>
- 
+    <p class="hero-title">Full-Stack Developer · AI Agent Engineer · Vibe Coder · Spec-Driven Builder</p>
+
     <p class="hero-desc">
       I build intelligent systems at the intersection of modern web development and AI — from autonomous agents that manage your digital life, to AI-powered marketplaces, to RAG chatbots that make knowledge accessible. I work spec-first and ship fast using vibe coding workflows.
     </p>
@@ -659,7 +671,7 @@
 
     <div class="hero-stats">
       <div>
-        <div class="stat-num">5+</div>
+        <div class="stat-num">6+</div>
         <div class="stat-label">Live AI Projects</div>
       </div>
       <div>
@@ -737,10 +749,9 @@
       </div>
     </div>
 
-  
-    <!-- AI Todo -->
+    <!-- SmartTodo -->
     <div class="project-card">
-      <span class="project-num">04</span>
+      <span class="project-num">03</span>
       <span class="project-tag tag-ai">✅ AI App</span>
       <h3 class="project-title">SmartTodo — AI-Powered Task Manager</h3>
       <p class="project-desc">
@@ -761,7 +772,7 @@
 
     <!-- Robotics RAG -->
     <div class="project-card">
-      <span class="project-num">05</span>
+      <span class="project-num">04</span>
       <span class="project-tag tag-rag">🤖 RAG System</span>
       <h3 class="project-title">Robotics Knowledge Base + RAG Chatbot</h3>
       <p class="project-desc">
@@ -777,6 +788,26 @@
       <div class="project-links">
         <a href="https://robotics-book.vercel.app/" target="_blank" rel="noopener noreferrer" class="proj-link">Live Demo ↗</a>
         <a href="https://github.com/Kinzaqirat/robotics-book" target="_blank" rel="noopener noreferrer" class="proj-link ghost">GitHub ↗</a>
+      </div>
+    </div>
+
+    <!-- TradeFlow — NEW -->
+    <div class="project-card tradeflow">
+      <span class="project-num">05</span>
+      <span class="project-tag tag-trading">📈 Trading Platform</span>
+      <h3 class="project-title">TradeFlow — Trading Platform</h3>
+      <p class="project-desc">
+        A modern, full-stack trading platform built for real-time market interaction. Features a clean dashboard for managing trades, tracking positions, and monitoring portfolio performance — designed for speed, clarity, and reliability.
+      </p>
+      <div class="project-stack">
+        <span class="stack-pill">Next.js</span>
+        <span class="stack-pill">TypeScript</span>
+        <span class="stack-pill">Tailwind CSS</span>
+        <span class="stack-pill">REST API</span>
+        <span class="stack-pill">Vercel</span>
+      </div>
+      <div class="project-links">
+        <a href="https://trade-flow-frontend.vercel.app" target="_blank" rel="noopener noreferrer" class="proj-link green">Live Demo ↗</a>
       </div>
     </div>
 
@@ -834,14 +865,12 @@
         <span class="skill-item">Vercel</span>
         <span class="skill-item">CI/CD</span>
         <span class="skill-item">Kafka</span>
-        <span class="skill-item">Nginx</span>
+        <span class="stack-pill">Nginx</span>
         <span class="skill-item">PostgreSQL</span>
         <span class="skill-item">MySQL</span>
       </div>
-
-   
-  </div>
-         <div class="skill-group" style="border-color: rgba(0,212,255,0.25); background: linear-gradient(135deg, rgba(0,212,255,0.04), rgba(124,58,237,0.03));">
+    </div>
+    <div class="skill-group" style="border-color: rgba(0,212,255,0.25); background: linear-gradient(135deg, rgba(0,212,255,0.04), rgba(124,58,237,0.03));">
       <div class="skill-group-title" style="color: #a78bfa;">⚡ Dev Approach</div>
       <div class="skill-list">
         <span class="skill-item" style="border-color: rgba(167,139,250,0.3); color: #c4b5fd;">Vibe Coding</span>
@@ -851,6 +880,7 @@
         <span class="skill-item" style="border-color: rgba(167,139,250,0.3); color: #c4b5fd;">Agile Delivery</span>
       </div>
     </div>
+  </div>
 </section>
 
 <div class="divider"></div>
@@ -890,7 +920,7 @@
           <div class="contact-link-icon">in</div>
           <div>
             <div class="contact-link-label">LinkedIn</div>
-            <div class="contact-link-value">Kinza Saeed</div>
+            <div class="contact-link-value">Kinza Ahmed/div>
           </div>
         </a>
         <a href="https://medium.com/@kinzasaeed688" target="_blank" rel="noopener noreferrer" class="contact-link">
